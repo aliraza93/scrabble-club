@@ -28,7 +28,8 @@ class MemberController extends Controller
 
         return Inertia::render('Members/List', [
             'members' => $members,
-            'search' => $searchTerm ?? ''
+            'search' => $searchTerm ?? '',
+            'success' => session('success')
         ]);
     }
 
@@ -66,7 +67,6 @@ class MemberController extends Controller
         $averageScore = $games->avg('pivot.score');
         $highestScore = $games->max('pivot.score');
         $highestScoreGame = $games->where('pivot.score', $highestScore)->first();
-
         return Inertia::render('Members/Profile', [
             'member' => $member,
             'averageScore' => $averageScore,
@@ -104,13 +104,21 @@ class MemberController extends Controller
 
     public function leaderboard()
     {
+        // Fetch members with their average scores
         $topMembers = Member::with('games')
             ->get()
-            ->sortByDesc(function ($member) {
-                return $member->games->avg('pivot.score');
+            ->map(function ($member) {
+                // Calculate the average score for each member
+                $averageScore = $member->games->avg('pivot.score');
+                return [
+                    'name' => $member->name,
+                    'averageScore' => $averageScore,
+                ];
             })
-            ->take(10);
+            ->sortByDesc('averageScore')
+            ->take(10)
+            ->values();
 
-        return Inertia::render('Leaderboard', ['topMembers' => $topMembers]);
+        return Inertia::render('LeaderBoard', ['topMembers' => $topMembers]);
     }
 }
