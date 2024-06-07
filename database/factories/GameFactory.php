@@ -17,6 +17,7 @@ class GameFactory extends Factory
     public function definition(): array
     {
         return [
+            'name' => $this->faker->name(),
             'played_at' => $this->faker->date(),
         ];
     }

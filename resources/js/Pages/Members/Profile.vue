@@ -164,6 +164,21 @@
                                 }}
                             </dd>
                         </div>
+
+                        <div
+                            class="px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6"
+                        >
+                            <dt class="text-sm font-medium text-gray-500">
+                                Highest Score Game
+                            </dt>
+                            <dd class="mt-1 text-sm text-gray-900 sm:mt-0">
+                                {{
+                                    highestGameName
+                                        ? highestGameName
+                                        : "N/A"
+                                }}
+                            </dd>
+                        </div>
                     </dl>
                 </div>
             </div>
@@ -283,6 +298,10 @@ defineProps({
         type: Object,
         required: true,
     },
+    highestGameName: {
+        type: String,
+        default: ''
+    }
 });
 
 const isEven = (index) => index % 2 === 0;

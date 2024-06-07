@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateMemberRequest;
 use App\Models\Member;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class MemberController extends Controller
@@ -24,7 +25,7 @@ class MemberController extends Controller
         $this->applySearch($memberQuery, $searchTerm);
 
         // Paginate the results and pass to the view
-        $members = $memberQuery->paginate(5);
+        $members = $memberQuery->paginate(20);
 
         return Inertia::render('Members/List', [
             'members' => $members,
@@ -55,7 +56,7 @@ class MemberController extends Controller
     public function store(StoreMemberRequest $request)
     {
         Member::create($request->validated());
-        return redirect()->route('members.index')->with('success', 'Member created successfully.');
+        return to_route('members.index')->with('success', 'Member created successfully.');
     }
 
     /**
@@ -67,11 +68,14 @@ class MemberController extends Controller
         $averageScore = $games->avg('pivot.score');
         $highestScore = $games->max('pivot.score');
         $highestScoreGame = $games->where('pivot.score', $highestScore)->first();
+        $highestGameName = $highestScoreGame ? $highestScoreGame->name : null;
+        
         return Inertia::render('Members/Profile', [
             'member' => $member,
             'averageScore' => $averageScore,
             'highestScore' => $highestScore,
-            'highestScoreDate' => $highestScoreGame->played_at ?? '',
+            'highestScoreDate' => $highestScoreGame ? $highestScoreGame->played_at : null,
+            'highestGameName' => $highestGameName,
             'recentGames' => $games,
         ]);
     }
@@ -90,7 +94,10 @@ class MemberController extends Controller
     public function update(UpdateMemberRequest $request, Member $member)
     {
         $member->update($request->validated());
-        return redirect()->route('members.index')->with('success', 'Member updated successfully.');
+        // return Redirect::route('members.index')->with('success', 'Member updated successfully.');
+        return response()->json([
+            'success' => 'Member updated successfully!'
+        ]);
     }
 
     /**
@@ -99,7 +106,7 @@ class MemberController extends Controller
     public function destroy(Member $member)
     {
         $member->delete();
-        return redirect()->route('members.index')->with('success', 'Member deleted successfully.');
+        return to_route('members.index')->with('success', 'Member deleted successfully.');
     }
 
     public function leaderboard()
