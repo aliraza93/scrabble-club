@@ -22,7 +22,12 @@
                             >
                             <span
                                 class="text-lg font-medium text-gray-900 dark:text-white"
-                                >{{ member.name }}</span
+                            >
+                                <a
+                                    :href="`members/${member.id}`"
+                                    class="text-blue-600 dark:text-blue-500 hover:underline"
+                                    >{{ member.name }}</a
+                                ></span
                             >
                         </div>
                         <span

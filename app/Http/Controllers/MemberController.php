@@ -118,6 +118,7 @@ class MemberController extends Controller
                 // Calculate the average score for each member
                 $averageScore = $member->games->avg('pivot.score');
                 return [
+                    'id' => $member->id,
                     'name' => $member->name,
                     'averageScore' => $averageScore,
                 ];
