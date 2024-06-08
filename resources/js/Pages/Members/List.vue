@@ -132,7 +132,7 @@
                                         {{ member.email }}
                                     </td>
                                     <td class="px-4 py-3">
-                                        {{ member.phone }}
+                                        {{ member.masked_phone }}
                                     </td>
                                     <td class="px-4 py-3">
                                         {{ member.joined_at }}

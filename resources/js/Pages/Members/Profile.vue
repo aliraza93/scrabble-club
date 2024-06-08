@@ -3,9 +3,7 @@
     <Main />
     <!-- Start block -->
     <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 antialiased">
-        <div
-            class="mx-auto max-w-screen-xl px-4 lg:px-12"
-        >
+        <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
             <h1
                 class="text-xl sm:text-xl font-bold text-gray-800 dark:text-white mb-4"
             >
@@ -32,7 +30,8 @@
                                         v-if="
                                             key !== 'id' &&
                                             key !== 'created_at' &&
-                                            key !== 'updated_at'
+                                            key !== 'updated_at' &&
+                                            key !== 'phone'
                                         "
                                         :class="{
                                             'bg-gray-50': isEven($index),
@@ -43,7 +42,11 @@
                                         <dt
                                             class="text-sm font-medium text-gray-500"
                                         >
-                                            {{ key }}
+                                            {{
+                                                key === "masked_phone"
+                                                    ? "phone"
+                                                    : key
+                                            }}
                                         </dt>
                                         <dd
                                             v-if="key === 'played_at'"

@@ -10,6 +10,7 @@ class Member extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'email', 'phone', 'joined_at'];
+    protected $appends = ['masked_phone'];
 
     public function games()
     {
@@ -17,24 +18,24 @@ class Member extends Model
     }
 
     // Accessor to format the phone number
-    public function getPhoneAttribute($value)
+    public function getMaskedPhoneAttribute()
     {
         // Format for 9-digit phone number
-        if (strlen($value) == 9) {
-            return substr($value, 0, 3) . '-' . substr($value, 3, 3) . '-' . substr($value, 6);
+        if (strlen($this->phone) == 9) {
+            return substr($this->phone, 0, 3) . '-' . substr($this->phone, 3, 3) . '-' . substr($this->phone, 6);
         }
 
         // Format for 10-digit phone number
-        if (strlen($value) == 10) {
-            return substr($value, 0, 3) . '-' . substr($value, 3, 3) . '-' . substr($value, 6);
+        if (strlen($this->phone) == 10) {
+            return substr($this->phone, 0, 3) . '-' . substr($this->phone, 3, 3) . '-' . substr($this->phone, 6);
         }
 
         // Format for 11-digit phone number
-        if (strlen($value) == 11) {
-            return substr($value, 0, 1) . '-' . substr($value, 1, 3) . '-' . substr($value, 4, 3) . '-' . substr($value, 7);
+        if (strlen($this->phone) == 11) {
+            return substr($this->phone, 0, 1) . '-' . substr($this->phone, 1, 3) . '-' . substr($this->phone, 4, 3) . '-' . substr($this->phone, 7);
         }
 
         // If the phone number has a different length, return it as is
-        return $value;
+        return $this->phone;
     }
 }

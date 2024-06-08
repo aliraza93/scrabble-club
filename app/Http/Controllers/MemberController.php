@@ -90,7 +90,10 @@ class MemberController extends Controller
      */
     public function edit(Member $member)
     {
-        return Inertia::render('Members/Edit', ['member' => $member]);
+        return Inertia::render('Members/Edit', [
+            'member' => $member,
+            'originalPhone' => $member->original_phone
+        ]);
     }
 
     /**
