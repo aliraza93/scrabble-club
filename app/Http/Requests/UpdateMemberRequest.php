@@ -24,8 +24,8 @@ class UpdateMemberRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:members,email,' . $this->route('member')->id,
-            'phone' => 'nullable|string|max:20',
-            'joined_at' => 'required|date',
+            'phone' => 'nullable|numeric',
+            'joined_at' => 'nullable|date',
         ];
     }
 }

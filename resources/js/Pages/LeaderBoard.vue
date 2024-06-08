@@ -43,7 +43,6 @@
 
 <script setup>
 import { ref } from "vue";
-import { usePage } from "@inertiajs/inertia-vue3";
 import { Head } from "@inertiajs/vue3";
 import Main from "../Layout/Main.vue";
 

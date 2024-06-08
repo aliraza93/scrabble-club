@@ -55,9 +55,14 @@ class MemberController extends Controller
      */
     public function store(StoreMemberRequest $request)
     {
-        Member::create($request->validated());
-        return to_route('members.index')->with('success', 'Member created successfully.');
+        $validatedData = $request->validated();
+        $validatedData['joined_at'] = now();
+
+        Member::create($validatedData);
+
+        return redirect()->route('members.index')->with('success', 'Member created successfully!');
     }
+
 
     /**
      * Display the specified resource.
@@ -69,7 +74,7 @@ class MemberController extends Controller
         $highestScore = $games->max('pivot.score');
         $highestScoreGame = $games->where('pivot.score', $highestScore)->first();
         $highestGameName = $highestScoreGame ? $highestScoreGame->name : null;
-        
+
         return Inertia::render('Members/Profile', [
             'member' => $member,
             'averageScore' => $averageScore,

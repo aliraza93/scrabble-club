@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Member::factory(10)->create()->each(function ($member) {
+        Member::factory(100)->create()->each(function ($member) {
             $games = Game::factory(5)->create();
             foreach ($games as $game) {
                 $member->games()->attach($game->id, ['score' => rand(50, 300)]);

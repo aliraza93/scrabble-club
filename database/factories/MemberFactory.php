@@ -19,7 +19,7 @@ class MemberFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'phone' => $this->faker->phoneNumber(),
+            'phone' => $this->faker->randomNumber(),
             'joined_at' => $this->faker->date(),
         ];
     }
