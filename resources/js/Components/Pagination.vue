@@ -13,15 +13,11 @@
                             <p class="text-sm text-gray-700">
                                 Showing
                                 <!-- space -->
-                                <span class="font-medium">{{
-                                    data.from
-                                }}</span>
+                                <span class="font-medium">{{ data.from }}</span>
                                 <!-- space -->
                                 to
                                 <!-- space -->
-                                <span class="font-medium">{{
-                                    data.to
-                                }}</span>
+                                <span class="font-medium">{{ data.to }}</span>
                                 <!-- space -->
                                 of
                                 <!-- space -->
