@@ -10,13 +10,20 @@
 
 ## Steps to run the project
 
-- git clone the project
-- cd/project
-- create .env
-- composer install
-- npm install
-- npm run dev
-- php artisan serve
+``git clone the project``
+
+``cd/project``
+
+``create .env``
+
+``composer install``
+
+``npm install``
+
+``npm run dev``
+
+``php artisan serve``
 
 ## Seed data
-- php artisan migrate:fresh --seed
+
+``php artisan migrate:fresh --seed``
