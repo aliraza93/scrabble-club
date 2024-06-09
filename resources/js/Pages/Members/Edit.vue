@@ -19,7 +19,11 @@
                 {{ successMessage }}
             </div>
 
-            <form class="max-w-sm mt-4" action="#" @submit.prevent="updateMember">
+            <form
+                class="max-w-sm mt-4"
+                action="#"
+                @submit.prevent="updateMember"
+            >
                 <div class="mb-5">
                     <label
                         for="name-success"
@@ -80,12 +84,11 @@
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >Phone</label
                     >
-                    <input
-                        type="number"
-                        placeholder="678687876"
-                        id="phone"
+                    <MaskInput
                         v-model="phone"
-                        aria-describedby="helper-text-explanation"
+                        :value="phone"
+                        mask="(##) ####-####"
+                        placeholder="(67) 8678-7876"
                         :class="{
                             'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500':
                                 errors.phone,
@@ -137,6 +140,7 @@
 import { defineProps, ref, onMounted } from "vue";
 import { Head } from "@inertiajs/vue3";
 import Main from "../../Layout/Main.vue";
+import { MaskInput } from "vue-3-mask";
 
 const props = defineProps({
     member: {
@@ -165,7 +169,10 @@ const updateMember = async () => {
     };
 
     try {
-        const response = await axios.put(`/members/${props.member.id}`, formData);
+        const response = await axios.put(
+            `/members/${props.member.id}`,
+            formData
+        );
 
         // Simulate a delay to mimic a server request
         await new Promise((resolve) => setTimeout(resolve, 2000));

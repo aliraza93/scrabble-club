@@ -132,7 +132,7 @@
                                         {{ member.email }}
                                     </td>
                                     <td class="px-4 py-3">
-                                        {{ member.masked_phone }}
+                                        {{ member.phone }}
                                     </td>
                                     <td class="px-4 py-3">
                                         {{ member.joined_at }}
@@ -206,7 +206,6 @@ import Pagination from "@/Components/Pagination.vue";
 import { defineProps, ref, computed, watch } from "vue";
 import { Head, usePage, router, useForm } from "@inertiajs/vue3";
 import Main from "../../Layout/Main.vue";
-import axios from "axios";
 
 defineProps({
     members: {
@@ -221,6 +220,8 @@ defineProps({
 });
 
 const selectedMember = ref(null);
+
+const successMessage = ref('');
 
 const pageNumber = ref(1);
 const searchTerm = ref(usePage().props.search ?? "");
@@ -258,6 +259,16 @@ const deleteMember = (member) => {
         const url = `/members/${member.id}`;
         deleteForm.delete(url, {
             preserveScroll: true,
+            onSuccess: () => {
+                // Revisit the same page to reflect deletion without resetting page number
+                router.visit(membersUrl.value, {
+                    replace: true,
+                    preserveState: true,
+                    preserveScroll: true,
+                });
+
+                successMessage.value = "Member Deleted Successfully!";
+            },
         });
     }
 };

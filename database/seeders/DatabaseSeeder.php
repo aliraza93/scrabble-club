@@ -23,9 +23,28 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         Member::factory(100)->create()->each(function ($member) {
-            $games = Game::factory(5)->create();
-            foreach ($games as $game) {
-                $member->games()->attach($game->id, ['score' => rand(50, 300)]);
+            // Create games with at least two players
+            $gamesCount = rand(1, 5); // Random number of games for each member
+
+            for ($i = 0; $i < $gamesCount; $i++) {
+                $game = Game::factory()->create();
+
+                // Determine the number of players for each game
+                $playersCount = rand(2, $gamesCount);
+
+                // Select random players from the previously created members
+                $players = Member::inRandomOrder()->limit($playersCount)->get();
+
+                // Attach players to the game
+                foreach ($players as $player) {
+                    // Make sure not to attach the same member multiple times
+                    if ($player->id !== $member->id) {
+                        $game->members()->attach($player->id, ['score' => rand(50, 300)]);
+                    }
+                }
+
+                // Attach the current member to the game
+                $game->members()->attach($member->id, ['score' => rand(50, 300)]);
             }
         });
     }

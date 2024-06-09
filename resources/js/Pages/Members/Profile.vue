@@ -30,8 +30,7 @@
                                         v-if="
                                             key !== 'id' &&
                                             key !== 'created_at' &&
-                                            key !== 'updated_at' &&
-                                            key !== 'phone'
+                                            key !== 'updated_at'
                                         "
                                         :class="{
                                             'bg-gray-50': isEven($index),
@@ -43,7 +42,7 @@
                                             class="text-sm font-medium text-gray-500"
                                         >
                                             {{
-                                                key === "masked_phone"
+                                                key === "phone"
                                                     ? "phone"
                                                     : key
                                             }}
@@ -190,6 +189,19 @@
                                     }}
                                 </dd>
                             </div>
+
+                            <div
+                                class="px-4 py-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-6"
+                            >
+                                <dt class="text-sm font-medium text-gray-500">
+                                    Games Played
+                                </dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0">
+                                    {{
+                                        totalGames
+                                    }}
+                                </dd>
+                            </div>
                         </dl>
                     </div>
                 </div>
@@ -313,6 +325,10 @@ defineProps({
         type: String,
         default: "",
     },
+    totalGames: {
+        type: String,
+        default: ""
+    }
 });
 
 const isEven = (index) => index % 2 === 0;

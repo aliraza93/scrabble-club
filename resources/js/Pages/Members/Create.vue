@@ -80,11 +80,11 @@
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >Phone</label
                     >
-                    <input
-                        type="number"
-                        placeholder="678687876"
-                        id="phone"
+                    <MaskInput
                         v-model="phone"
+                        mask="(##) ####-####"
+                        placeholder="(67) 8678-7876"
+                        id="phone"
                         aria-describedby="helper-text-explanation"
                         :class="{
                             'bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500':
@@ -137,6 +137,7 @@
 import { Head } from "@inertiajs/vue3";
 import Main from "../../Layout/Main.vue";
 import { ref } from "vue";
+import { MaskInput } from "vue-3-mask";
 
 const name = ref("");
 const email = ref("");

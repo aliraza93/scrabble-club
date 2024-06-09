@@ -10,32 +10,22 @@ class Member extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'email', 'phone', 'joined_at'];
-    protected $appends = ['masked_phone'];
 
     public function games()
     {
         return $this->belongsToMany(Game::class)->withPivot('score')->withTimestamps();
     }
 
-    // Accessor to format the phone number
-    public function getMaskedPhoneAttribute()
+    // Define an accessor for the phone attribute
+    public function getPhoneAttribute($value)
     {
-        // Format for 9-digit phone number
-        if (strlen($this->phone) == 9) {
-            return substr($this->phone, 0, 3) . '-' . substr($this->phone, 3, 3) . '-' . substr($this->phone, 6);
+        // Check if the phone number is provided and has at least 8 digits
+        if ($value && strlen($value) >= 8) {
+            // Format the phone number as "(##) ####-####"
+            return preg_replace('/^(\d{2})(\d{4})(\d{4})$/', '($1) $2-$3', $value);
+        } else {
+            // Return the original phone number if it doesn't meet the conditions
+            return $value;
         }
-
-        // Format for 10-digit phone number
-        if (strlen($this->phone) == 10) {
-            return substr($this->phone, 0, 3) . '-' . substr($this->phone, 3, 3) . '-' . substr($this->phone, 6);
-        }
-
-        // Format for 11-digit phone number
-        if (strlen($this->phone) == 11) {
-            return substr($this->phone, 0, 1) . '-' . substr($this->phone, 1, 3) . '-' . substr($this->phone, 4, 3) . '-' . substr($this->phone, 7);
-        }
-
-        // If the phone number has a different length, return it as is
-        return $this->phone;
     }
 }

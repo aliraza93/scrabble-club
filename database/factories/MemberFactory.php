@@ -19,8 +19,23 @@ class MemberFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'phone' => $this->faker->numerify(str_repeat('#', rand(9, 11))),
+            'phone' => $this->customPhoneNumberFormat(),
             'joined_at' => $this->faker->date(),
         ];
+    }
+
+    private function customPhoneNumberFormat(): string
+    {
+        // Generate the first two digits
+        $firstTwoDigits = $this->faker->numberBetween(10, 99);
+
+        // Generate the next four digits
+        $middleDigits = $this->faker->numberBetween(1000, 9999);
+
+        // Generate the last four digits
+        $lastFourDigits = $this->faker->numberBetween(1000, 9999);
+
+        // Return the formatted phone number
+        return "($firstTwoDigits) $middleDigits-$lastFourDigits";
     }
 }
